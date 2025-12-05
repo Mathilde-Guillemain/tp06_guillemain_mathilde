@@ -5,6 +5,7 @@ import { PollutionListComponent } from './pollution-list/pollution-list.componen
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AuthState, Logout, InitAuth } from './store/auth.state';
+import { FavoritesState } from './store/favorites.state';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,10 +19,12 @@ export class AppComponent implements OnInit {
   title = 'my-pollution-app';
   isAuthenticated$!: Observable<boolean>;
   user$!: Observable<any>;
+  favoriteCount$!: Observable<number>;
 
   constructor(private store: Store, private router: Router) {
     this.isAuthenticated$ = this.store.select(AuthState.isAuthenticated);
     this.user$ = this.store.select(AuthState.user);
+    this.favoriteCount$ = this.store.select(FavoritesState.getFavoritesCount);
   }
 
   ngOnInit(): void {

@@ -7,6 +7,7 @@ import { PollutionListComponent } from './pollution-list/pollution-list.componen
 import { PollutionRecapComponent } from './pollution-recap/pollution-recap.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 import { LoginComponent } from './login/login.component';
 import { AuthState } from './store/auth.state';
 import { AuthService } from './services/auth.service';
@@ -35,7 +36,11 @@ export const routes: Routes = [
     component: PollutionListComponent,
     canActivate: [authGuard]
   },
-  // Route 'add-pollution' supprimée
+  { 
+    path: 'favorites', 
+    component: FavoritesComponent,
+    canActivate: [authGuard]
+  },
   { 
     path: 'pollution/:id', 
     component: PollutionRecapComponent,

@@ -4,7 +4,9 @@
   </div>
   <nav class="navbar-nav">
     <a routerLink="/pollutions" routerLinkActive="active">Pollutions</a>
-    <!-- Lien 'Ajouter pollution' supprimé -->
+    <a routerLink="/favorites" routerLinkActive="active" class="nav-favorites">
+      ❤️ Favoris <span *ngIf="favoriteCount$ | async as count" class="badge">{{ count }}</span>
+    </a>
     <a routerLink="/utilisateur" routerLinkActive="active">Utilisateurs</a>
     <a routerLink="/add-user" routerLinkActive="active">Ajouter utilisateur</a>
   </nav>

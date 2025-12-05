@@ -39,6 +39,24 @@
   color: white;
 }
 
+.nav-favorites {
+  position: relative;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #ff6b6b;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
 .navbar-user {
   display: flex;
   align-items: center;

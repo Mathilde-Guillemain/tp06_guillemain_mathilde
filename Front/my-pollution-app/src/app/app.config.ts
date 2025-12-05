@@ -4,6 +4,7 @@ import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@a
 import { routes } from './app.routes';
 import { provideStore } from '@ngxs/store';
 import { AuthState } from './store/auth.state';
+import { FavoritesState } from './store/favorites.state';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -11,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
-    provideStore([AuthState]),
+    provideStore([AuthState, FavoritesState]),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

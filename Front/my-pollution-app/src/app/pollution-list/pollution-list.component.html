@@ -8,6 +8,12 @@
     — {{ p.type }} à {{ p.lieu }}
     <button (click)="edit(p)">✏️ Modifier</button>
     <button (click)="delete(p)">🗑️ Supprimer</button>
+    <button 
+      (click)="toggleFavorite(p)" 
+      [class.is-favorite]="isFavorite(p.id)"
+      class="btn-favorite">
+      {{ isFavorite(p.id) ? '❤️ Retirer des favoris' : '🤍 Ajouter aux favoris' }}
+    </button>
   </li>
 </ul>
 
