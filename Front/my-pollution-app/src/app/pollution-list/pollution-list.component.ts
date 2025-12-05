@@ -1,8 +1,9 @@
+import { PollutionFormComponent } from '../pollution-form/pollution-form.component';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PollutionService} from '../services/pollution.service';
 import { Pollution } from '../models/pollution.model';
-import { PollutionFormComponent } from '../pollution-form/pollution-form.component';
+// ...existing code...
 import { PollutionRecapComponent } from '../pollution-recap/pollution-recap.component';
 import { Observable } from 'rxjs';
 
@@ -41,9 +42,18 @@ export class PollutionListComponent implements OnInit {
 
   delete(p: Pollution) {
     if (!p.id) return;
-    this.pollutionService.deletePollution(p.id);
-    this.refreshList();
-    this.selectedPollution = null;
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette pollution?')) {
+      this.pollutionService.deletePollution(p.id).subscribe({
+        next: () => {
+          this.refreshList();
+          this.selectedPollution = null;
+        },
+        error: (err) => {
+          console.error('Delete error:', err);
+          alert('Erreur lors de la suppression');
+        }
+      });
+    }
   }
 
 

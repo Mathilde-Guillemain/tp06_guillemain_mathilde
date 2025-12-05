@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError, tap } from 'rxjs';
 import { Pollution } from '../models/pollution.model';
 
 @Injectable({
@@ -29,8 +29,10 @@ export class PollutionService {
     );
   }
 
-  addPollution(pollution: Pollution): Observable<Pollution> {
-    return this.http.post<Pollution>(this.apiUrl, pollution).pipe(
+  addPollution(pollution: any): Observable<any> {
+    console.log('POST', this.apiUrl, pollution);
+    return this.http.post<any>(this.apiUrl, pollution).pipe(
+      tap(res => console.log('addPollution response', res)),
       catchError(err => {
         console.error('Erreur lors de l’ajout de la pollution', err);
         return throwError(() => new Error('Impossible d’ajouter la pollution'));
@@ -38,8 +40,10 @@ export class PollutionService {
     );
   }
 
-  updatePollution(id: number, updated: Pollution): Observable<Pollution> {
-    return this.http.put<Pollution>(`${this.apiUrl}/${id}`, updated).pipe(
+  updatePollution(id: number, updated: any): Observable<any> {
+    console.log('PUT', `${this.apiUrl}/${id}`, updated);
+    return this.http.put<any>(`${this.apiUrl}/${id}`, updated).pipe(
+      tap(res => console.log('updatePollution response', res)),
       catchError(err => {
         console.error(`Erreur lors de la mise à jour de la pollution ${id}`, err);
         return throwError(() => new Error('Impossible de modifier la pollution'));

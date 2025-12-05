@@ -40,21 +40,50 @@ export class PollutionFormComponent {
     }
   }
 
+
   onSubmit() {
-  if (this.pollutionForm.invalid) return;
+    if (this.pollutionForm.invalid) return;
 
-  const value = this.pollutionForm.value as Pollution;
+    const value = this.pollutionForm.value;
+    // Adapter les noms de champs pour correspondre au modèle et à l'API
+    const payload = {
+      id: value.id,
+      titre: value.titre,
+      type_pollution: value.type,
+      description: value.description,
+      date_observation: value.dateObservation,
+      lieu: value.lieu,
+      latitude: Number(value.latitude),
+      longitude: Number(value.longitude),
+      photo_url: value.photoUrl
+    };
 
-  if (value.id) {
-    this.pollutionService.updatePollution(value.id!, value);
-  } else {
-    const { id, ...payload } = value;
-    this.pollutionService.addPollution(payload);
+    console.log('Sending pollution payload:', payload);
+
+    if (payload.id) {
+      this.pollutionService.updatePollution(payload.id, payload as any).subscribe({
+        next: () => {
+          this.pollutionForm.reset();
+          this.formSubmitted.emit();
+        },
+        error: (err) => {
+          alert('Erreur lors de la modification');
+          console.error(err);
+        }
+      });
+    } else {
+      this.pollutionService.addPollution(payload as any).subscribe({
+        next: () => {
+          this.pollutionForm.reset();
+          this.formSubmitted.emit();
+        },
+        error: (err) => {
+          alert('Erreur lors de l\'ajout');
+          console.error(err);
+        }
+      });
+    }
   }
-
-  this.pollutionForm.reset();
-  this.formSubmitted.emit();
-}
 
 
   cancel() {
